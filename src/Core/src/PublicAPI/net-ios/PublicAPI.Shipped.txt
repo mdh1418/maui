@@ -944,8 +944,6 @@ Microsoft.Maui.IImageSourceService.GetImageAsync(Microsoft.Maui.IImageSource! im
 Microsoft.Maui.IImageSourceService<T>
 Microsoft.Maui.IImageSourceServiceProvider
 Microsoft.Maui.IImageSourceServiceProvider.GetImageSourceService(System.Type! imageSource) -> Microsoft.Maui.IImageSourceService?
-Microsoft.Maui.IImageSourceServiceProvider.GetImageSourceServiceType(System.Type! imageSource) -> System.Type!
-Microsoft.Maui.IImageSourceServiceProvider.GetImageSourceType(System.Type! imageSource) -> System.Type!
 Microsoft.Maui.IImageSourceServiceProvider.HostServiceProvider.get -> System.IServiceProvider!
 Microsoft.Maui.IImageSourceServiceResult
 Microsoft.Maui.IImageSourceServiceResult.IsDisposed.get -> bool
