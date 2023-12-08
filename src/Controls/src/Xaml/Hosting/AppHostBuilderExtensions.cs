@@ -219,10 +219,10 @@ namespace Microsoft.Maui.Controls.Hosting
 		{
 			builder.ConfigureImageSources(services =>
 			{
-				services.AddService<FileImageSource>(svcs => new FileImageSourceService(svcs.CreateLogger<FileImageSourceService>()));
-				services.AddService<FontImageSource>(svcs => new FontImageSourceService(svcs.GetRequiredService<IFontManager>(), svcs.CreateLogger<FontImageSourceService>()));
-				services.AddService<StreamImageSource>(svcs => new StreamImageSourceService(svcs.CreateLogger<StreamImageSourceService>()));
-				services.AddService<UriImageSource>(svcs => new UriImageSourceService(svcs.CreateLogger<UriImageSourceService>()));
+				services.AddKeyedService<FileImageSource>(typeof(IImageSourceService<FileImageSource>), svcs => new FileImageSourceService(svcs.CreateLogger<FileImageSourceService>()));
+				services.AddKeyedService<FontImageSource>(typeof(IImageSourceService<FontImageSource>), svcs => new FontImageSourceService(svcs.GetRequiredService<IFontManager>(), svcs.CreateLogger<FontImageSourceService>()));
+				services.AddKeyedService<StreamImageSource>(typeof(IImageSourceService<StreamImageSource>), svcs => new StreamImageSourceService(svcs.CreateLogger<StreamImageSourceService>()));
+				services.AddKeyedService<UriImageSource>(typeof(IImageSourceService<UriImageSource>), svcs => new UriImageSourceService(svcs.CreateLogger<UriImageSourceService>()));
 			});
 
 			return builder;

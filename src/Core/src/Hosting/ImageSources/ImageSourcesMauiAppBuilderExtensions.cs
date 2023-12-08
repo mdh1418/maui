@@ -13,10 +13,10 @@ namespace Microsoft.Maui.Hosting
 		{
 			builder.ConfigureImageSources(services =>
 			{
-				services.AddService<IFileImageSource>(svcs => new FileImageSourceService(svcs.CreateLogger<FileImageSourceService>()));
-				services.AddService<IFontImageSource>(svcs => new FontImageSourceService(svcs.GetRequiredService<IFontManager>(), svcs.CreateLogger<FontImageSourceService>()));
-				services.AddService<IStreamImageSource>(svcs => new StreamImageSourceService(svcs.CreateLogger<StreamImageSourceService>()));
-				services.AddService<IUriImageSource>(svcs => new UriImageSourceService(svcs.CreateLogger<UriImageSourceService>()));
+				services.AddKeyedService<IFileImageSource>(typeof(IImageSourceService<IFileImageSource>), svcs => new FileImageSourceService(svcs.CreateLogger<FileImageSourceService>()));
+				services.AddKeyedService<IFontImageSource>(typeof(IImageSourceService<IFontImageSource>), svcs => new FontImageSourceService(svcs.GetRequiredService<IFontManager>(), svcs.CreateLogger<FontImageSourceService>()));
+				services.AddKeyedService<IStreamImageSource>(typeof(IImageSourceService<IStreamImageSource>), svcs => new StreamImageSourceService(svcs.CreateLogger<StreamImageSourceService>()));
+				services.AddKeyedService<IUriImageSource>(typeof(IImageSourceService<IUriImageSource>), svcs => new UriImageSourceService(svcs.CreateLogger<UriImageSourceService>()));
 			});
 			return builder;
 		}
