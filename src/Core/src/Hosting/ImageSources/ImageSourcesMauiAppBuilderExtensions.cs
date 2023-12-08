@@ -25,11 +25,11 @@ namespace Microsoft.Maui.Hosting
 		{
 			if (configureDelegate != null)
 			{
-				builder.Services.AddSingleton<ImageSourceRegistration>(new ImageSourceRegistration(configureDelegate));
+				builder.Services.AddKeyedSingleton<ImageSourceRegistration>(new ImageSourceRegistration(configureDelegate));
 			}
 
-			builder.Services.TryAddSingleton<IImageSourceServiceProvider>(svcs => new ImageSourceServiceProvider(svcs.GetRequiredService<IImageSourceServiceCollection>(), svcs));
-			builder.Services.TryAddSingleton<IImageSourceServiceCollection>(svcs => new ImageSourceServiceBuilder(svcs.GetServices<ImageSourceRegistration>()));
+			builder.Services.TryAddKeyedSingleton<IImageSourceServiceProvider>(typeof(IImageSourceServiceProvider), (svcs, _) => new ImageSourceServiceProvider(svcs.GetRequiredService<IImageSourceServiceCollection>(), svcs));
+			builder.Services.TryAddKeyedSingleton<IImageSourceServiceCollection>(typeof(IImageSourceServiceCollection), (svcs, _) => new ImageSourceServiceBuilder(svcs.GetServices<ImageSourceRegistration>()));
 
 			return builder;
 		}
