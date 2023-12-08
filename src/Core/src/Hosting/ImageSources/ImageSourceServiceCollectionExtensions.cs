@@ -38,5 +38,40 @@ namespace Microsoft.Maui.Hosting
 
 			return services;
 		}
+
+		/// <summary>
+		/// Registers an image service with the underlying service container via AddKeyedSingleton.
+		/// </summary>
+		/// <typeparam name="TImageSource">The image type to register for</typeparam>
+		/// <typeparam name="TImageSourceService">The service type to register</typeparam>
+		/// <param name="services">The service collection</param>
+		/// <param name="serviceKey">The key the image service is registered as</param>
+		/// <returns>The service collection</returns>
+		public static IImageSourceServiceCollection AddKeyedService<TImageSource, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TImageSourceService>(this IImageSourceServiceCollection services, object? serviceKey)
+			where TImageSource : IImageSource
+			where TImageSourceService : class, IImageSourceService<TImageSource>
+		{
+#pragma warning disable RS0030 // Do not use banned APIs, the current method is also banned
+			services.AddKeyedSingleton<IImageSourceService<TImageSource>, TImageSourceService>(serviceKey);
+#pragma warning restore RS0030 // Do not use banned APIs
+
+			return services;
+		}
+
+		/// <summary>
+		/// Registers an image service with the underlying service container via AddKeyedSingleton.
+		/// </summary>
+		/// <typeparam name="TImageSource">The image type to register for</typeparam>
+		/// <param name="services">The service collection</param>
+		/// <param name="serviceKey">The key the image service is registered as</param>
+		/// <param name="implementationFactory">A factory method to create the service</param>
+		/// <returns>The service collection</returns>
+		public static IImageSourceServiceCollection AddKeyedService<TImageSource>(this IImageSourceServiceCollection services, object? serviceKey, Func<IServiceProvider, IImageSourceService<TImageSource>> implementationFactory)
+			where TImageSource : IImageSource
+		{
+			services.AddKeyedSingleton(serviceKey, (provider, _) => implementationFactory(((IImageSourceServiceProvider)provider).HostServiceProvider));
+
+			return services;
+		}
 	}
 }
