@@ -2,6 +2,9 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Hosting.Internal;
 
 namespace Microsoft.Maui.Hosting
@@ -22,8 +25,9 @@ namespace Microsoft.Maui.Hosting
 
 		public IServiceProvider HostServiceProvider { get; }
 
+        // Is this supposed to return the registered service type? Like FileImageSourceService aka IImageSourceService<IFileImageSource>?
 		public IImageSourceService? GetImageSourceService(Type imageSource) =>
-			(IImageSourceService?)GetService(GetImageSourceServiceType(imageSource));
+			HostServiceProvider.GetKeyedService<IImageSourceService<IImageSource>>(GetImageSourceServiceType(imageSource));
 
 		public Type GetImageSourceServiceType(Type imageSource) =>
 			_serviceCache.GetOrAdd(imageSource, type =>
