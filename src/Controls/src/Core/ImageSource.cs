@@ -25,6 +25,10 @@ namespace Microsoft.Maui.Controls
 		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='IsEmpty']/Docs/*" />
 		public virtual bool IsEmpty => false;
 
+#pragma warning disable RS0016, RS0036
+		public virtual object ImageSourceServiceKey => typeof(ImageSource);
+#pragma warning restore RS0016, RS0036
+
 		public static bool IsNullOrEmpty(ImageSource imageSource) =>
 			imageSource == null || imageSource.IsEmpty;
 

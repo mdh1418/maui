@@ -16,6 +16,10 @@ namespace Microsoft.Maui.Controls
 		/// <include file="../../docs/Microsoft.Maui.Controls/StreamImageSource.xml" path="//Member[@MemberName='IsEmpty']/Docs/*" />
 		public override bool IsEmpty => Stream == null;
 
+#pragma warning disable RS0016
+		public override object ImageSourceServiceKey => typeof(StreamImageSource);
+#pragma warning restore RS0016
+
 		/// <include file="../../docs/Microsoft.Maui.Controls/StreamImageSource.xml" path="//Member[@MemberName='Stream']/Docs/*" />
 		public virtual Func<CancellationToken, Task<Stream>> Stream
 		{
