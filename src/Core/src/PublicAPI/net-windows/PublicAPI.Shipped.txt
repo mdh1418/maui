@@ -962,7 +962,7 @@ Microsoft.Maui.IImageSourceServiceProvider
 Microsoft.Maui.IImageSourceServiceProvider.GetImageSourceService(System.Type! imageSource) -> Microsoft.Maui.IImageSourceService?
 Microsoft.Maui.IImageSourceServiceProvider.GetImageSourceServiceType(System.Type! imageSource) -> System.Type!
 Microsoft.Maui.IImageSourceServiceProvider.GetImageSourceType(System.Type! imageSource) -> System.Type!
-Microsoft.Maui.IImageSourceServiceProvider.HostServiceProvider.get -> System.IServiceProvider!
+Microsoft.Maui.IImageSourceServiceProvider.HostServiceProvider.get -> Microsoft.Extensions.DependencyInjection.IKeyedServiceProvider!
 Microsoft.Maui.IImageSourceServiceResult
 Microsoft.Maui.IImageSourceServiceResult.IsDisposed.get -> bool
 Microsoft.Maui.IImageSourceServiceResult.IsResolutionDependent.get -> bool

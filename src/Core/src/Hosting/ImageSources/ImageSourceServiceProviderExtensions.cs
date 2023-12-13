@@ -13,7 +13,7 @@ namespace Microsoft.Maui
 			provider.GetImageSourceService(typeof(T));
 
 		public static IImageSourceService GetRequiredImageSourceService(this IImageSourceServiceProvider provider, IImageSource imageSource) =>
-			provider.GetRequiredImageSourceService(imageSource.GetType());
+			(IImageSourceService)provider.HostServiceProvider.GetRequiredKeyedService(typeof(IImageSourceService), imageSource.ImageSourceServiceKey);
 
 		public static IImageSourceService GetRequiredImageSourceService<T>(this IImageSourceServiceProvider provider)
 			where T : IImageSource =>

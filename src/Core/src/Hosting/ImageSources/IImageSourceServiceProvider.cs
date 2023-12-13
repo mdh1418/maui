@@ -1,12 +1,13 @@
 #nullable enable
 
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Maui
 {
 	public interface IImageSourceServiceProvider : IServiceProvider
 	{
-		IServiceProvider HostServiceProvider { get; }
+		IKeyedServiceProvider HostServiceProvider { get; }
 
 		IImageSourceService? GetImageSourceService(Type imageSource);
 

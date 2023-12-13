@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Hosting.Internal;
 
 namespace Microsoft.Maui.Hosting
@@ -17,10 +18,10 @@ namespace Microsoft.Maui.Hosting
 		public ImageSourceServiceProvider(IImageSourceServiceCollection collection, IServiceProvider hostServiceProvider)
 			: base(collection)
 		{
-			HostServiceProvider = hostServiceProvider;
+			HostServiceProvider = (IKeyedServiceProvider)hostServiceProvider;
 		}
 
-		public IServiceProvider HostServiceProvider { get; }
+		public IKeyedServiceProvider HostServiceProvider { get; }
 
 		public IImageSourceService? GetImageSourceService(Type imageSource) =>
 			(IImageSourceService?)GetService(GetImageSourceServiceType(imageSource));
