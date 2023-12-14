@@ -224,6 +224,11 @@ namespace Microsoft.Maui.Controls.Hosting
 				services.AddService<StreamImageSource>(svcs => new StreamImageSourceService(svcs.CreateLogger<StreamImageSourceService>()));
 				services.AddService<UriImageSource>(svcs => new UriImageSourceService(svcs.CreateLogger<UriImageSourceService>()));
 			});
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(FileImageSource), (svcs, _) => (IImageSourceService)svcs.GetRequiredKeyedService(typeof(IImageSourceService), typeof(IFileImageSource)));
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(FontImageSource), (svcs, _) => (IImageSourceService)svcs.GetRequiredKeyedService(typeof(IImageSourceService), typeof(IFontImageSource)));
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(StreamImageSource), (svcs, _) => (IImageSourceService)svcs.GetRequiredKeyedService(typeof(IImageSourceService), typeof(IStreamImageSource)));
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(UriImageSource), (svcs, _) => (IImageSourceService)svcs.GetRequiredKeyedService(typeof(IImageSourceService), typeof(IUriImageSource)));
+
 
 			return builder;
 		}

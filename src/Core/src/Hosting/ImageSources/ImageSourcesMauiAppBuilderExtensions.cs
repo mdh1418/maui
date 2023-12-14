@@ -31,6 +31,9 @@ namespace Microsoft.Maui.Hosting
 			builder.Services.TryAddSingleton<IImageSourceServiceProvider>(svcs => new ImageSourceServiceProvider(svcs.GetRequiredService<IImageSourceServiceCollection>(), svcs));
 			builder.Services.TryAddSingleton<IImageSourceServiceCollection>(svcs => new ImageSourceServiceBuilder(svcs.GetServices<ImageSourceRegistration>()));
 			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(IFileImageSource), (svcs, _) => new FileImageSourceService(svcs.CreateLogger<FileImageSourceService>()));
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(IFontImageSource), (svcs, _) => new FontImageSourceService(svcs.GetRequiredService<IFontManager>(), svcs.CreateLogger<FontImageSourceService>()));
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(IStreamImageSource), (svcs, _) => new StreamImageSourceService(svcs.CreateLogger<StreamImageSourceService>()));
+			builder.Services.AddKeyedSingleton<IImageSourceService>(typeof(IUriImageSource), (svcs, _) => new UriImageSourceService(svcs.CreateLogger<UriImageSourceService>()));
 
 			return builder;
 		}
