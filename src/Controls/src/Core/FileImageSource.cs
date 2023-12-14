@@ -13,10 +13,6 @@ namespace Microsoft.Maui.Controls
 		/// <include file="../../docs/Microsoft.Maui.Controls/FileImageSource.xml" path="//Member[@MemberName='IsEmpty']/Docs/*" />
 		public override bool IsEmpty => string.IsNullOrEmpty(File);
 
-#pragma warning disable RS0016
-		public override object ImageSourceServiceKey => typeof(IFileImageSource);
-#pragma warning restore RS0016
-
 		/// <include file="../../docs/Microsoft.Maui.Controls/FileImageSource.xml" path="//Member[@MemberName='File']/Docs/*" />
 		public string File
 		{

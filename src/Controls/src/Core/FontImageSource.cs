@@ -9,10 +9,6 @@ namespace Microsoft.Maui.Controls
 		/// <include file="../../docs/Microsoft.Maui.Controls/FontImageSource.xml" path="//Member[@MemberName='IsEmpty']/Docs/*" />
 		public override bool IsEmpty => string.IsNullOrEmpty(Glyph);
 
-#pragma warning disable RS0016
-		public override object ImageSourceServiceKey => typeof(IFontImageSource);
-#pragma warning restore RS0016
-
 		/// <summary>Bindable property for <see cref="Color"/>.</summary>
 		public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(FontImageSource), default(Color),
 			propertyChanged: (b, o, n) => ((FontImageSource)b).OnSourceChanged());

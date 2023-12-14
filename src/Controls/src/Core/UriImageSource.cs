@@ -29,10 +29,6 @@ namespace Microsoft.Maui.Controls
 		/// <include file="../../docs/Microsoft.Maui.Controls/UriImageSource.xml" path="//Member[@MemberName='IsEmpty']/Docs/*" />
 		public override bool IsEmpty => Uri == null;
 
-#pragma warning disable RS0016
-		public override object ImageSourceServiceKey => typeof(IUriImageSource);
-#pragma warning restore RS0016
-
 		/// <include file="../../docs/Microsoft.Maui.Controls/UriImageSource.xml" path="//Member[@MemberName='CacheValidity']/Docs/*" />
 		public TimeSpan CacheValidity
 		{
