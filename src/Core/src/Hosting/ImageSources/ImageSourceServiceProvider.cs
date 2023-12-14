@@ -7,56 +7,40 @@ using Microsoft.Maui.Hosting.Internal;
 
 namespace Microsoft.Maui.Hosting
 {
-	sealed class ImageSourceServiceProvider : MauiFactory, IImageSourceServiceProvider
+	sealed class ImageSourceServiceProvider : IImageSourceServiceProvider
 	{
-		static readonly string ImageSourceInterface = typeof(IImageSource).FullName!;
-		static readonly Type ImageSourceServiceType = typeof(IImageSourceService<>);
-
-		readonly ConcurrentDictionary<Type, Type> _imageSourceCache = new ConcurrentDictionary<Type, Type>();
-		readonly ConcurrentDictionary<Type, Type> _serviceCache = new ConcurrentDictionary<Type, Type>();
-
 		public ImageSourceServiceProvider(IImageSourceServiceCollection collection, IServiceProvider hostServiceProvider)
-			: base(collection)
 		{
+			_ = collection;
 			HostServiceProvider = (IKeyedServiceProvider)hostServiceProvider;
 		}
 
 		public IKeyedServiceProvider HostServiceProvider { get; }
 
-		public IImageSourceService? GetImageSourceService(Type imageSource) =>
-			(IImageSourceService?)GetService(GetImageSourceServiceType(imageSource));
-
-		public Type GetImageSourceServiceType(Type imageSource) =>
-			_serviceCache.GetOrAdd(imageSource, type =>
-			{
-				var genericConcreteType = ImageSourceServiceType.MakeGenericType(type);
-
-				if (genericConcreteType != null && GetServiceDescriptor(genericConcreteType) != null)
-					return genericConcreteType;
-
-				return ImageSourceServiceType.MakeGenericType(GetImageSourceType(type));
-			});
-
-		public Type GetImageSourceType(Type imageSource) =>
-			_imageSourceCache.GetOrAdd(imageSource, CreateImageSourceTypeCacheEntry);
-
-		Type CreateImageSourceTypeCacheEntry(Type type)
+		public object? GetService(Type serviceType)
 		{
-			if (type.IsInterface)
+			if (serviceType is IImageSource imageSourceType)
 			{
-				if (type.GetInterface(ImageSourceInterface) != null)
-					return type;
-			}
-			else
-			{
-				foreach (var directInterface in type.GetInterfaces())
+				try
 				{
-					if (directInterface.GetInterface(ImageSourceInterface) != null)
-						return directInterface;
+					return HostServiceProvider.GetKeyedService(typeof(IImageSourceService), imageSourceType.ImageSourceServiceKey);
+				}
+				catch (Exception ex)
+				{
+					throw new InvalidOperationException($"Unable to find a image source service for {nameof(imageSourceType)}.", ex);
 				}
 			}
 
-			throw new InvalidOperationException($"Unable to find the image source type because none of the interfaces on {type.Name} were derived from {nameof(IImageSource)}.");
+			throw new InvalidOperationException($"Cannot retrieve ImageSourceService for non ImageSource type {nameof(serviceType)}");
 		}
+
+		public IImageSourceService? GetImageSourceService(Type imageSource) =>
+			(IImageSourceService?)GetService(imageSource);
+
+		public Type GetImageSourceServiceType(Type imageSource) =>
+			throw new PlatformNotSupportedException();
+
+		public Type GetImageSourceType(Type imageSource) =>
+			throw new PlatformNotSupportedException();
 	}
 }
