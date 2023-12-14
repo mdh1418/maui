@@ -10,7 +10,7 @@ namespace Microsoft.Maui.Controls
 		public override bool IsEmpty => string.IsNullOrEmpty(Glyph);
 
 #pragma warning disable RS0016
-		public override object ImageSourceServiceKey => typeof(FontImageSource);
+		public override object ImageSourceServiceKey => typeof(IFontImageSource);
 #pragma warning restore RS0016
 
 		/// <summary>Bindable property for <see cref="Color"/>.</summary>

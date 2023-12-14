@@ -17,7 +17,7 @@ namespace Microsoft.Maui.Controls
 		public override bool IsEmpty => Stream == null;
 
 #pragma warning disable RS0016
-		public override object ImageSourceServiceKey => typeof(StreamImageSource);
+		public override object ImageSourceServiceKey => typeof(IStreamImageSource);
 #pragma warning restore RS0016
 
 		/// <include file="../../docs/Microsoft.Maui.Controls/StreamImageSource.xml" path="//Member[@MemberName='Stream']/Docs/*" />
