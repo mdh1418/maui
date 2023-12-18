@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.LifecycleEvents;
@@ -20,7 +21,7 @@ namespace Microsoft.Maui.Controls.Compatibility.Hosting
 					// This creates a dummy MauiContext that wraps the Application.
 
 					var services = IPlatformApplication.Current.Services;
-					var mauiContext = new MauiContext(services, app);
+					var mauiContext = new MauiContext((IKeyedServiceProvider)services, app);
 					var state = new ActivationState(mauiContext);
 #pragma warning disable CS0612 // Type or member is obsolete
 					Forms.Init(state, new InitializationOptions { Flags = InitializationFlags.SkipRenderers });

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Graphics;
 #if __IOS__ || MACCATALYST
 using PlatformView = UIKit.UIView;
@@ -310,7 +311,7 @@ namespace Microsoft.Maui.Handlers
 
 			if (view.Background is ImageSourcePaint image)
 			{
-				var provider = handler.GetRequiredService<IImageSourceServiceProvider>();
+				var provider = (IKeyedServiceProvider)handler.GetServiceProvider();
 
 				platformView.UpdateBackgroundImageSourceAsync(image.ImageSource, provider)
 					.FireAndForget(handler);

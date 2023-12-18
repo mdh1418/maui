@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
+using Microsoft.Extensions.DependencyInjection;
 
 #if IOS || MACCATALYST
 using PlatformImage = UIKit.UIImage;
@@ -25,7 +27,7 @@ namespace Microsoft.Maui.Platform
 	public partial class ImageSourcePartLoader
 	{
 #if IOS || ANDROID || WINDOWS || TIZEN
-		IImageSourceServiceProvider? _imageSourceServiceProvider;
+		IKeyedServiceProvider? _imageSourceServiceProvider;
 #endif
 
 		readonly IImageSourcePartSetter _setter;
@@ -62,11 +64,18 @@ namespace Microsoft.Maui.Platform
 			if (imageSource?.Source is not null)
 			{
 #if IOS || ANDROID || WINDOWS || TIZEN
-				_imageSourceServiceProvider ??= handler.GetRequiredService<IImageSourceServiceProvider>();
+                try
+                {
+				    _imageSourceServiceProvider ??= (IKeyedServiceProvider)handler.GetServiceProvider();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Unable to get service provider: {e}");
+                }
 #endif
 
 #if IOS || WINDOWS
-				var scale = handler.MauiContext?.GetOptionalPlatformWindow()?.GetDisplayDensity() ?? 1.0f;
+				var scale = handler.MInnerauiContext?.GetOptionalPlatformWindow()?.GetDisplayDensity() ?? 1.0f;
 				var result = await imageSource.UpdateSourceAsync(platformView, _imageSourceServiceProvider, Setter.SetImageSource, scale, token)
 					.ConfigureAwait(false);
 

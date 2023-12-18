@@ -44,7 +44,7 @@ namespace Microsoft.Maui.Platform
 		public static Task<IImageSourceServiceResult<UIImage>?> UpdateSourceAsync(
 			this UIImageView imageView,
 			IImageSourcePart image,
-			IImageSourceServiceProvider services,
+			IKeyedServiceProvider services,
 			CancellationToken cancellationToken = default)
 		{
 			float scale = imageView.Window?.GetDisplayDensity() ?? 1.0f;

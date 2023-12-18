@@ -1446,7 +1446,7 @@ Microsoft.Maui.LockableObservableListWrapper.this[int index].get -> string!
 Microsoft.Maui.LockableObservableListWrapper.this[int index].set -> void
 Microsoft.Maui.MauiContext
 Microsoft.Maui.MauiContext.Handlers.get -> Microsoft.Maui.IMauiHandlersFactory!
-Microsoft.Maui.MauiContext.MauiContext(System.IServiceProvider! services) -> void
+
 Microsoft.Maui.MauiContext.Services.get -> System.IServiceProvider!
 Microsoft.Maui.MissingMapperAttribute
 Microsoft.Maui.MissingMapperAttribute.Description.get -> string?
@@ -2318,7 +2318,7 @@ static Microsoft.Maui.Platform.ViewExtensions.UpdateAnchorX(this object! platfor
 static Microsoft.Maui.Platform.ViewExtensions.UpdateAnchorY(this object! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateAutomationId(this object! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateBackground(this object! platformView, Microsoft.Maui.IView! view) -> void
-static Microsoft.Maui.Platform.ViewExtensions.UpdateBackgroundImageSourceAsync(this object! platformView, Microsoft.Maui.IImageSource? imageSource, Microsoft.Maui.IImageSourceServiceProvider? provider) -> System.Threading.Tasks.Task!
+
 static Microsoft.Maui.Platform.ViewExtensions.UpdateBorder(this object! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateClip(this object! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateClipsToBounds(this object! platformView, Microsoft.Maui.IView! view) -> void

@@ -71,7 +71,7 @@ namespace Microsoft.Maui.Handlers
 
 		public static void MapThumbImageSource(ISliderHandler handler, ISlider slider)
 		{
-			var provider = handler.GetRequiredService<IImageSourceServiceProvider>();
+			var provider = (IKeyedServiceProvider)handler.GetServiceProvider();
 
 			handler.PlatformView?.UpdateThumbImageSourceAsync(slider, provider)
 				.FireAndForget(handler);

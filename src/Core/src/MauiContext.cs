@@ -13,15 +13,16 @@ namespace Microsoft.Maui
 		readonly Lazy<Android.Content.Context?> _context;
 
 		public Android.Content.Context? Context => _context.Value;
-
-		public MauiContext(IServiceProvider services, Android.Content.Context context)
+#pragma warning disable RS0016
+		public MauiContext(IKeyedServiceProvider services, Android.Content.Context context)
 			: this(services)
 		{
 			AddWeakSpecific(context);
 		}
+#pragma warning restore RS0016
 #endif
-
-		public MauiContext(IServiceProvider services)
+#pragma warning disable RS0016
+		public MauiContext(IKeyedServiceProvider services)
 		{
 			_services = new WrappedServiceProvider(services ?? throw new ArgumentNullException(nameof(services)));
 			_handlers = new Lazy<IMauiHandlersFactory>(() => _services.GetRequiredService<IMauiHandlersFactory>());
@@ -29,6 +30,7 @@ namespace Microsoft.Maui
 			_context = new Lazy<Android.Content.Context?>(() => _services.GetService<Android.Content.Context>());
 #endif
 		}
+#pragma warning restore RS0016
 
 		public IServiceProvider Services => _services;
 
@@ -46,16 +48,16 @@ namespace Microsoft.Maui
 			_services.AddSpecific(typeof(TService), static state => ((WeakReference)state).Target, new WeakReference(instance));
 		}
 
-		class WrappedServiceProvider : IServiceProvider
+		class WrappedServiceProvider : IKeyedServiceProvider
 		{
 			readonly ConcurrentDictionary<Type, (object, Func<object, object?>)> _scopeStatic = new();
 
-			public WrappedServiceProvider(IServiceProvider serviceProvider)
+			public WrappedServiceProvider(IKeyedServiceProvider serviceProvider)
 			{
 				Inner = serviceProvider;
 			}
 
-			public IServiceProvider Inner { get; }
+			public IKeyedServiceProvider Inner { get; }
 
 			public object? GetService(Type serviceType)
 			{
@@ -67,6 +69,12 @@ namespace Microsoft.Maui
 
 				return Inner.GetService(serviceType);
 			}
+
+            public object? GetKeyedService(Type serviceType, object? serviceKey) =>
+                Inner.GetKeyedService(serviceType, serviceKey);
+
+            public object GetRequiredKeyedService(Type serviceType, object? serviceKey) =>
+                Inner.GetRequiredKeyedService(serviceType, serviceKey);
 
 			public void AddSpecific(Type type, Func<object, object?> getter, object state)
 			{

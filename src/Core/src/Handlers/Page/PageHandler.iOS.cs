@@ -25,7 +25,7 @@ namespace Microsoft.Maui.Handlers
 		{
 			if (handler is IPlatformViewHandler platformViewHandler && platformViewHandler.ViewController is not null)
 			{
-				var provider = handler.GetRequiredService<IImageSourceServiceProvider>();
+				var provider = (IKeyedServiceProvider)handler.GetServiceProvider();
 				platformViewHandler.ViewController.View?.UpdateBackground(page, provider);
 			}
 		}

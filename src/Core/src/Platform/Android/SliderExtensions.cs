@@ -3,6 +3,7 @@ using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Widget;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Maui.Platform
 {
@@ -44,7 +45,8 @@ namespace Microsoft.Maui.Platform
 		public static void UpdateThumbColor(this SeekBar seekBar, ISlider slider) =>
 			seekBar.Thumb?.SetColorFilter(slider.ThumbColor, FilterMode.SrcIn);
 
-		public static async Task UpdateThumbImageSourceAsync(this SeekBar seekBar, ISlider slider, IImageSourceServiceProvider provider)
+#pragma warning disable RS0016
+		public static async Task UpdateThumbImageSourceAsync(this SeekBar seekBar, ISlider slider, IKeyedServiceProvider provider)
 		{
 			var context = seekBar.Context;
 
@@ -55,7 +57,7 @@ namespace Microsoft.Maui.Platform
 
 			if (thumbImageSource != null)
 			{
-				var service = provider.GetRequiredImageSourceService(thumbImageSource);
+				var service = provider.GetRequiredKeyedService<IImageSourceService>(thumbImageSource.GetType());
 				var result = await service.GetDrawableAsync(thumbImageSource, context);
 
 				var thumbDrawable = result?.Value;
@@ -64,5 +66,6 @@ namespace Microsoft.Maui.Platform
 					seekBar.SetThumb(thumbDrawable);
 			}
 		}
+#pragma warning restore RS0016
 	}
 }

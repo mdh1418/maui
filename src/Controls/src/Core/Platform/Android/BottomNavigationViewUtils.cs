@@ -133,8 +133,7 @@ namespace Microsoft.Maui.Controls.Platform
 				return;
 
 			var services = context.Services;
-			var provider = services.GetRequiredService<IImageSourceServiceProvider>();
-			var imageSourceService = provider.GetRequiredImageSourceService(source);
+            var imageSourceService = services.GetRequiredKeyedService<IImageSourceService>(source.GetType());
 
 			var result = await imageSourceService.GetDrawableAsync(
 				source,

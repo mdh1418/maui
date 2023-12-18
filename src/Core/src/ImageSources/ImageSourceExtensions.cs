@@ -38,8 +38,7 @@ namespace Microsoft.Maui
 				return Task.FromResult<IImageSourceServiceResult<PlatformImage>?>(null);
 
 			var services = mauiContext.Services;
-			var provider = services.GetRequiredService<IImageSourceServiceProvider>();
-			var imageSourceService = provider.GetRequiredImageSourceService(imageSource);
+            var imageSourceService = services.GetRequiredKeyedService<IImageSourceService>(imageSource.GetType());
 			return imageSourceService.GetPlatformImageAsync(imageSource, mauiContext);
 		}
 

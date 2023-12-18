@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Maui.Platform
 {
@@ -11,10 +12,10 @@ namespace Microsoft.Maui.Platform
 		public static void Unfocus(this object platformView, IView view) { }
 
 		public static void UpdateVisibility(this object platformView, IView view) { }
-
-		public static Task UpdateBackgroundImageSourceAsync(this object platformView, IImageSource? imageSource, IImageSourceServiceProvider? provider)
+#pragma warning disable RS0016
+		public static Task UpdateBackgroundImageSourceAsync(this object platformView, IImageSource? imageSource, IKeyedServiceProvider? provider)
 			=> Task.CompletedTask;
-
+#pragma warning restore RS0016
 		public static void UpdateBackground(this object platformView, IView view) { }
 
 		public static void UpdateClipsToBounds(this object platformView, IView view) { }

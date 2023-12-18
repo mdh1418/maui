@@ -1551,8 +1551,8 @@ Microsoft.Maui.MauiApplication.Services.set -> void
 Microsoft.Maui.MauiContext
 Microsoft.Maui.MauiContext.Context.get -> Android.Content.Context?
 Microsoft.Maui.MauiContext.Handlers.get -> Microsoft.Maui.IMauiHandlersFactory!
-Microsoft.Maui.MauiContext.MauiContext(System.IServiceProvider! services, Android.Content.Context! context) -> void
-Microsoft.Maui.MauiContext.MauiContext(System.IServiceProvider! services) -> void
+
+
 Microsoft.Maui.MauiContext.Services.get -> System.IServiceProvider!
 Microsoft.Maui.MauiViewGroup
 Microsoft.Maui.MauiViewGroup.MauiViewGroup(Android.Content.Context? context, Android.Util.IAttributeSet? attrs, int defStyle) -> void
@@ -2942,7 +2942,7 @@ static Microsoft.Maui.Platform.SliderExtensions.UpdateMaximumTrackColor(this And
 static Microsoft.Maui.Platform.SliderExtensions.UpdateMinimum(this Android.Widget.SeekBar! seekBar, Microsoft.Maui.ISlider! slider) -> void
 static Microsoft.Maui.Platform.SliderExtensions.UpdateMinimumTrackColor(this Android.Widget.SeekBar! seekBar, Microsoft.Maui.ISlider! slider) -> void
 static Microsoft.Maui.Platform.SliderExtensions.UpdateThumbColor(this Android.Widget.SeekBar! seekBar, Microsoft.Maui.ISlider! slider) -> void
-static Microsoft.Maui.Platform.SliderExtensions.UpdateThumbImageSourceAsync(this Android.Widget.SeekBar! seekBar, Microsoft.Maui.ISlider! slider, Microsoft.Maui.IImageSourceServiceProvider! provider) -> System.Threading.Tasks.Task!
+
 static Microsoft.Maui.Platform.SliderExtensions.UpdateValue(this Android.Widget.SeekBar! seekBar, Microsoft.Maui.ISlider! slider) -> void
 static Microsoft.Maui.Platform.StepperExtensions.UpdateIncrement(this Microsoft.Maui.Platform.MauiStepper! linearLayout, Microsoft.Maui.IStepper! stepper) -> void
 static Microsoft.Maui.Platform.StepperExtensions.UpdateIsEnabled(this Microsoft.Maui.Platform.MauiStepper! linearLayout, Microsoft.Maui.IStepper! stepper) -> void
@@ -3013,7 +3013,7 @@ static Microsoft.Maui.Platform.ViewExtensions.UpdateAutomationId(this Android.Vi
 static Microsoft.Maui.Platform.ViewExtensions.UpdateBackground(this Android.Views.View! platformView, Microsoft.Maui.Graphics.Paint? background) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateBackground(this Android.Views.View! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateBackground(this Microsoft.Maui.Platform.ContentViewGroup! platformView, Microsoft.Maui.IBorderStroke! border) -> void
-static Microsoft.Maui.Platform.ViewExtensions.UpdateBackgroundImageSourceAsync(this Android.Views.View! platformView, Microsoft.Maui.IImageSource? imageSource, Microsoft.Maui.IImageSourceServiceProvider? provider) -> System.Threading.Tasks.Task!
+
 static Microsoft.Maui.Platform.ViewExtensions.UpdateBorder(this Android.Views.View! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateClip(this Android.Views.View! platformView, Microsoft.Maui.IView! view) -> void
 static Microsoft.Maui.Platform.ViewExtensions.UpdateFlowDirection(this Android.Views.View! platformView, Microsoft.Maui.IView! view) -> void

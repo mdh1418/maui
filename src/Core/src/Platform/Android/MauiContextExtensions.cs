@@ -48,7 +48,7 @@ namespace Microsoft.Maui.Platform
 			Android.Content.Context? context = null,
 			bool registerNewNavigationRoot = false)
 		{
-			var scopedContext = new MauiContext(mauiContext.Services);
+			var scopedContext = new MauiContext((IKeyedServiceProvider)mauiContext.Services);
 
 			if (layoutInflater != null)
 				scopedContext.AddWeakSpecific(layoutInflater);

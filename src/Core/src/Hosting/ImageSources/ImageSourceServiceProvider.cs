@@ -23,7 +23,7 @@ namespace Microsoft.Maui.Hosting
 			{
 				try
 				{
-					return HostServiceProvider.GetKeyedService(typeof(IImageSourceService), imageSourceType.ImageSourceServiceKey);
+					return HostServiceProvider.GetKeyedService(typeof(IImageSourceService), imageSourceType.GetType());
 				}
 				catch (Exception ex)
 				{
