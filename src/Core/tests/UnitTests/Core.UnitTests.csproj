@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <ApplicationId>MIHW</ApplicationId>
     <TargetFramework>$(_MauiDotNetTfm)</TargetFramework>
     <AssemblyName>Microsoft.Maui.UnitTests</AssemblyName>
     <IsPackable>false</IsPackable>

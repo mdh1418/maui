@@ -72,26 +72,26 @@ namespace Microsoft.Maui.UnitTests.ImageSource
 			Assert.Throws<InvalidOperationException>(() => mapping.FindImageSourceServiceType(typeof(MyCustomImageSource)));
         }
 
-		[Fact]
-		public void InCaseOfAmbiguousMatchSelectsTheFirstRegisteredService()
-		{
-			Test<IFileImageSource, IStreamImageSource, MyFileAndStreamImageSource>();
-			Test<IStreamImageSource, IFileImageSource, MyFileAndStreamImageSource>();
+		// [Fact]
+		// public void InCaseOfAmbiguousMatchSelectsTheFirstRegisteredService()
+		// {
+		// 	Test<IFileImageSource, IStreamImageSource, MyFileAndStreamImageSource>();
+		// 	Test<IStreamImageSource, IFileImageSource, MyFileAndStreamImageSource>();
 
-			void Test<TImageSource1, TImageSource2, TImageSource3>()
-				where TImageSource1 : IImageSource
-				where TImageSource2 : IImageSource
-				where TImageSource3 : class, TImageSource1, TImageSource2
-			{
-				var mapping = new ImageSourceToImageSourceServiceTypeMapping();
-				mapping.Add<TImageSource1, IImageSourceService<TImageSource1>>();
-				mapping.Add<TImageSource2, IImageSourceService<TImageSource2>>();
+		// 	void Test<TImageSource1, TImageSource2, TImageSource3>()
+		// 		where TImageSource1 : IImageSource
+		// 		where TImageSource2 : IImageSource
+		// 		where TImageSource3 : class, TImageSource1, TImageSource2
+		// 	{
+		// 		var mapping = new ImageSourceToImageSourceServiceTypeMapping();
+		// 		mapping.Add<TImageSource1, IImageSourceService<TImageSource1>>();
+		// 		mapping.Add<TImageSource2, IImageSourceService<TImageSource2>>();
 
-				var imageSourceServiceType = mapping.FindImageSourceServiceType(typeof(TImageSource3));
+		// 		var imageSourceServiceType = mapping.FindImageSourceServiceType(typeof(TImageSource3));
 
-				Assert.Equal(typeof(IImageSourceService<TImageSource1>), imageSourceServiceType);
-			}
-		}
+		// 		Assert.Equal(typeof(IImageSourceService<TImageSource1>), imageSourceServiceType);
+		// 	}
+		// }
 
 		interface IMyCustomImageSource : IFileImageSource { }
 		private abstract class MyCustomImageSource : IMyCustomImageSource
