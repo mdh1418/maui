@@ -60,106 +60,111 @@ namespace Microsoft.Maui.Controls.Hosting
 			return builder;
 		}
 
-		public static IMauiHandlersCollection AddMauiControlsHandlers(this IMauiHandlersCollection handlersCollection)
-		{
-			handlersCollection.AddHandler<CollectionView, CollectionViewHandler>();
-			handlersCollection.AddHandler<CarouselView, CarouselViewHandler>();
-			handlersCollection.AddHandler<Application, ApplicationHandler>();
-			handlersCollection.AddHandler<ActivityIndicator, ActivityIndicatorHandler>();
-			handlersCollection.AddHandler<BoxView, BoxViewHandler>();
-			handlersCollection.AddHandler<Button, ButtonHandler>();
-			handlersCollection.AddHandler<CheckBox, CheckBoxHandler>();
-			handlersCollection.AddHandler<DatePicker, DatePickerHandler>();
-			handlersCollection.AddHandler<Editor, EditorHandler>();
-			handlersCollection.AddHandler<Entry, EntryHandler>();
-			handlersCollection.AddHandler<GraphicsView, GraphicsViewHandler>();
-			handlersCollection.AddHandler<Image, ImageHandler>();
-			handlersCollection.AddHandler<Label, LabelHandler>();
-			handlersCollection.AddHandler<Layout, LayoutHandler>();
-			handlersCollection.AddHandler<Picker, PickerHandler>();
-			handlersCollection.AddHandler<ProgressBar, ProgressBarHandler>();
-			handlersCollection.AddHandler<ScrollView, ScrollViewHandler>();
-			handlersCollection.AddHandler<SearchBar, SearchBarHandler>();
-			handlersCollection.AddHandler<Slider, SliderHandler>();
-			handlersCollection.AddHandler<Stepper, StepperHandler>();
-			handlersCollection.AddHandler<Switch, SwitchHandler>();
-			handlersCollection.AddHandler<TimePicker, TimePickerHandler>();
-			handlersCollection.AddHandler<Page, PageHandler>();
-			handlersCollection.AddHandler<WebView, WebViewHandler>();
-			handlersCollection.AddHandler<Border, BorderHandler>();
-			handlersCollection.AddHandler<IContentView, ContentViewHandler>();
-			handlersCollection.AddHandler<Shapes.Ellipse, ShapeViewHandler>();
-			handlersCollection.AddHandler<Shapes.Line, LineHandler>();
-			handlersCollection.AddHandler<Shapes.Path, PathHandler>();
-			handlersCollection.AddHandler<Shapes.Polygon, PolygonHandler>();
-			handlersCollection.AddHandler<Shapes.Polyline, PolylineHandler>();
-			handlersCollection.AddHandler<Shapes.Rectangle, RectangleHandler>();
-			handlersCollection.AddHandler<Shapes.RoundRectangle, RoundRectangleHandler>();
-			handlersCollection.AddHandler<Window, WindowHandler>();
-			handlersCollection.AddHandler<ImageButton, ImageButtonHandler>();
-			handlersCollection.AddHandler<IndicatorView, IndicatorViewHandler>();
-			handlersCollection.AddHandler<RadioButton, RadioButtonHandler>();
-			handlersCollection.AddHandler<RefreshView, RefreshViewHandler>();
-			handlersCollection.AddHandler<SwipeItem, SwipeItemMenuItemHandler>();
-			handlersCollection.AddHandler<SwipeView, SwipeViewHandler>();
+		public static IMauiHandlersCollection AddMauiControlsHandlers(this IMauiHandlersCollection handlersCollection) => handlersCollection;
 
-#pragma warning disable CA1416 //  'MenuBarHandler', MenuFlyoutSubItemHandler, MenuFlyoutSubItemHandler, MenuBarItemHandler is only supported on: 'ios' 13.0 and later
-			handlersCollection.AddHandler<MenuBar, MenuBarHandler>();
-			handlersCollection.AddHandler<MenuFlyoutSubItem, MenuFlyoutSubItemHandler>();
-			handlersCollection.AddHandler<MenuFlyoutSeparator, MenuFlyoutSeparatorHandler>();
-			handlersCollection.AddHandler<MenuFlyoutItem, MenuFlyoutItemHandler>();
-			handlersCollection.AddHandler<MenuBarItem, MenuBarItemHandler>();
+#pragma warning disable RS0016
+		public static IElementHandler GetBarebonesHandlers(object type)
+		{
+			return type switch
+			{
+				CollectionView => new CollectionViewHandler(),
+				CarouselView => new CarouselViewHandler(),
+				Application => new ApplicationHandler(),
+				ActivityIndicator => new ActivityIndicatorHandler(),
+				BoxView => new BoxViewHandler(),
+				Button => new ButtonHandler(),
+				CheckBox => new CheckBoxHandler(),
+				DatePicker => new DatePickerHandler(),
+				Editor => new EditorHandler(),
+				Entry => new EntryHandler(),
+				GraphicsView => new GraphicsViewHandler(),
+				Image => new ImageHandler(),
+				Label => new LabelHandler(),
+				IndicatorView => new IndicatorViewHandler(),
+				RadioButton => new RadioButtonHandler(),
+				RefreshView => new RefreshViewHandler(),
+				SwipeView => new SwipeViewHandler(),
+#if ANDROID || IOS || MACCATALYST || TIZEN
+				SwipeItemView => new SwipeItemViewHandler(),
+#if ANDROID || IOS || MACCATALYST
+				Shell => new ShellRenderer(),
+#else
+				Shell => new ShellHandler(),
+				ShellItem => new ShellItemHandler(),
+				ShellSection => new ShellSectionHandler(),
+#endif
+#endif
+				Layout => new LayoutHandler(),
+				Picker => new PickerHandler(),
+				ProgressBar => new ProgressBarHandler(),
+				ScrollView => new ScrollViewHandler(),
+				SearchBar => new SearchBarHandler(),
+				Slider => new SliderHandler(),
+				Stepper => new StepperHandler(),
+				Switch => new SwitchHandler(),
+				TimePicker => new TimePickerHandler(),
+#if IOS || MACCATALYST
+				NavigationPage => new Handlers.Compatibility.NavigationRenderer(),
+				TabbedPage => new Handlers.Compatibility.TabbedRenderer(),
+				FlyoutPage => new Handlers.Compatibility.PhoneFlyoutPageRenderer(),
+#endif
+#if WINDOWS || ANDROID || TIZEN
+				NavigationPage => new NavigationViewHandler(),
+				Toolbar => new ToolbarHandler(),
+				FlyoutPage => new FlyoutViewHandler(),
+				TabbedPage => new TabbedViewHandler(),
+#endif
+				Page => new PageHandler(),
+				WebView => new WebViewHandler(),
+				Border => new BorderHandler(),
+				Shapes.Ellipse => new ShapeViewHandler(),
+				Shapes.Line => new LineHandler(),
+				Shapes.Path => new PathHandler(),
+				Shapes.Polygon => new PolygonHandler(),
+				Shapes.Polyline => new PolylineHandler(),
+				Shapes.Rectangle => new RectangleHandler(),
+				Shapes.RoundRectangle => new RoundRectangleHandler(),
+				Window => new WindowHandler(),
+				ImageButton => new ImageButtonHandler(),
+				SwipeItem => new SwipeItemMenuItemHandler(),
+
+#pragma warning disable CA1416 //  'MenuBarHandler' => new MenuFlyoutSubItemHandler => new MenuFlyoutSubItemHandler => new MenuBarItemHandler is only supported on: 'ios' 13.0 and later
+				MenuBar => new MenuBarHandler(),
+				MenuFlyoutSubItem => new MenuFlyoutSubItemHandler(),
+				MenuFlyoutSeparator => new MenuFlyoutSeparatorHandler(),
+				MenuFlyoutItem => new MenuFlyoutItemHandler(),
+				MenuBarItem => new MenuBarItemHandler(),
 #pragma warning restore CA1416
 
 #if WINDOWS || ANDROID || IOS || MACCATALYST || TIZEN
-			handlersCollection.AddHandler(typeof(ListView), typeof(Handlers.Compatibility.ListViewRenderer));
+				// ListView => new Handlers.Compatibility.ListViewRenderer(),
 #if !TIZEN
-			handlersCollection.AddHandler(typeof(Cell), typeof(Handlers.Compatibility.CellRenderer));
-			handlersCollection.AddHandler(typeof(ImageCell), typeof(Handlers.Compatibility.ImageCellRenderer));
-			handlersCollection.AddHandler(typeof(EntryCell), typeof(Handlers.Compatibility.EntryCellRenderer));
-			handlersCollection.AddHandler(typeof(TextCell), typeof(Handlers.Compatibility.TextCellRenderer));
-			handlersCollection.AddHandler(typeof(ViewCell), typeof(Handlers.Compatibility.ViewCellRenderer));
-			handlersCollection.AddHandler(typeof(SwitchCell), typeof(Handlers.Compatibility.SwitchCellRenderer));
+				ImageCell => new Handlers.Compatibility.ImageCellRenderer(),
+				EntryCell => new Handlers.Compatibility.EntryCellRenderer(),
+				TextCell => new Handlers.Compatibility.TextCellRenderer(),
+				ViewCell => new Handlers.Compatibility.ViewCellRenderer(),
+				SwitchCell => new Handlers.Compatibility.SwitchCellRenderer(),
+				Cell => new Handlers.Compatibility.CellRenderer(),
 #endif
-			handlersCollection.AddHandler(typeof(TableView), typeof(Handlers.Compatibility.TableViewRenderer));
-			handlersCollection.AddHandler(typeof(Frame), typeof(Handlers.Compatibility.FrameRenderer));
+				// TableView => new Handlers.Compatibility.TableViewRenderer(),
+				// Frame => new Handlers.Compatibility.FrameRenderer(),
 #endif
 
 #if WINDOWS || MACCATALYST
-			handlersCollection.AddHandler(typeof(MenuFlyout), typeof(MenuFlyoutHandler));
-#endif
-
-#if IOS || MACCATALYST
-			handlersCollection.AddHandler(typeof(NavigationPage), typeof(Handlers.Compatibility.NavigationRenderer));
-			handlersCollection.AddHandler(typeof(TabbedPage), typeof(Handlers.Compatibility.TabbedRenderer));
-			handlersCollection.AddHandler(typeof(FlyoutPage), typeof(Handlers.Compatibility.PhoneFlyoutPageRenderer));
-#endif
-
-#if ANDROID || IOS || MACCATALYST || TIZEN
-			handlersCollection.AddHandler<SwipeItemView, SwipeItemViewHandler>();
-#if ANDROID || IOS || MACCATALYST
-			handlersCollection.AddHandler<Shell, ShellRenderer>();
-#else
-			handlersCollection.AddHandler<Shell, ShellHandler>();
-			handlersCollection.AddHandler<ShellItem, ShellItemHandler>();
-			handlersCollection.AddHandler<ShellSection, ShellSectionHandler>();
-#endif
-#endif
-#if WINDOWS || ANDROID || TIZEN
-			handlersCollection.AddHandler<NavigationPage, NavigationViewHandler>();
-			handlersCollection.AddHandler<Toolbar, ToolbarHandler>();
-			handlersCollection.AddHandler<FlyoutPage, FlyoutViewHandler>();
-			handlersCollection.AddHandler<TabbedPage, TabbedViewHandler>();
+				MenuFlyout => new MenuFlyoutHandler(),
 #endif
 
 #if WINDOWS
-			handlersCollection.AddHandler<ShellItem, ShellItemHandler>();
-			handlersCollection.AddHandler<ShellSection, ShellSectionHandler>();
-			handlersCollection.AddHandler<ShellContent, ShellContentHandler>();
-			handlersCollection.AddHandler<Shell, ShellHandler>();
+				ShellItem => new ShellItemHandler(),
+				ShellSection => new ShellSectionHandler(),
+				ShellContent => new ShellContentHandler(),
+				Shell => new ShellHandler(),
 #endif
-			return handlersCollection;
+				IContentView => new ContentViewHandler(),
+				_ => null
+			};
 		}
+#pragma warning restore RS0016
 
 		static MauiAppBuilder SetupDefaults(this MauiAppBuilder builder)
 		{
@@ -181,7 +186,7 @@ namespace Microsoft.Maui.Controls.Hosting
 				.ConfigureMauiHandlers(handlers =>
 				{
 					handlers.AddMauiControlsHandlers();
-				});
+				}, GetBarebonesHandlers);
 
 #if WINDOWS
 			builder.Services.TryAddEnumerable(ServiceDescriptor.Transient<IMauiInitializeService, MauiControlsInitializer>());

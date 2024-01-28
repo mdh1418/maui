@@ -7,9 +7,16 @@ namespace Microsoft.Maui.Hosting.Internal
 {
 	sealed class MauiHandlersFactory : MauiFactory, IMauiHandlersFactory
 	{
-		public MauiHandlersFactory(IEnumerable<HandlerMauiAppBuilderExtensions.HandlerRegistration> registrationActions) :
+		readonly List<Func<object, IElementHandler?>> _handlerFactories = new ();
+
+		public MauiHandlersFactory(IEnumerable<HandlerMauiAppBuilderExtensions.HandlerRegistration> registrationActions, IEnumerable<HandlerMauiAppBuilderExtensions.HandlerFactory> handlerFactory) :
 			base(CreateHandlerCollection(registrationActions))
 		{
+			if (handlerFactory != null)
+			{
+				foreach (var factory in handlerFactory)
+					_handlerFactories.Add(factory.GetHandler);
+			}
 		}
 
 		static MauiHandlersCollection CreateHandlerCollection(IEnumerable<HandlerMauiAppBuilderExtensions.HandlerRegistration> registrationActions)
@@ -28,6 +35,22 @@ namespace Microsoft.Maui.Hosting.Internal
 
 		public IElementHandler? GetHandler(Type type)
 			=> GetService(type) as IElementHandler;
+
+#pragma warning disable RS0016
+		public IElementHandler? GetHandler(object type)
+		{
+			IElementHandler? handler = null;
+
+			foreach (var factory in _handlerFactories)
+			{
+				handler = factory(type);
+				if (handler != null)
+					return handler;
+			}
+
+			return handler;
+		}
+#pragma warning restore RS0016
 
 		public IElementHandler? GetHandler<T>() where T : IElement
 			=> GetHandler(typeof(T));

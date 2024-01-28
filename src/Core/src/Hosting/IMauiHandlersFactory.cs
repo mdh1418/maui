@@ -12,6 +12,10 @@ namespace Microsoft.Maui
 
 		IElementHandler? GetHandler(Type type);
 
+#pragma warning disable RS0016
+		IElementHandler? GetHandler(object type);
+#pragma warning restore RS0016
+
 		IElementHandler? GetHandler<T>() where T : IElement;
 
 		IMauiHandlersCollection GetCollection();
