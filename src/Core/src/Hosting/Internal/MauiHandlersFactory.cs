@@ -30,13 +30,7 @@ namespace Microsoft.Maui.Hosting.Internal
 			if (!InternalCollection.TryGetService(GetVirtualViewHandlerServiceType(iview), out var serviceDescriptor))
 				return default;
 
-			if (serviceDescriptor!.ImplementationType != null)
-				return serviceDescriptor!.ImplementationType;
-
-			if (serviceDescriptor!.ImplementationFactory != null)
-				return serviceDescriptor!.ImplementationFactory(this).GetType();
-
-			return default;
+			return serviceDescriptor!.ImplementationType;
 		}
 
 		public IMauiHandlersCollection GetCollection() => (IMauiHandlersCollection)InternalCollection;
