@@ -27,11 +27,16 @@ namespace Microsoft.Maui.Hosting.Internal
 		[return: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
 		public Type? GetHandlerType(Type iview)
 		{
-			var serviceDescriptor = GetServiceDescriptor(GetVirtualViewHandlerServiceType(iview));
-			if (serviceDescriptor == null)
+			if (!InternalCollection.TryGetService(GetVirtualViewHandlerServiceType(iview), out var serviceDescriptor))
 				return default;
 
-			return serviceDescriptor.ImplementationType;
+			if (serviceDescriptor!.ImplementationType != null)
+				return serviceDescriptor!.ImplementationType;
+
+			if (serviceDescriptor!.ImplementationFactory != null)
+				return serviceDescriptor!.ImplementationFactory(this).GetType();
+
+			return default;
 		}
 
 		public IMauiHandlersCollection GetCollection() => (IMauiHandlersCollection)InternalCollection;
